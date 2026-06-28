@@ -3,7 +3,6 @@ package com.aero.techstore.ui.features.productstore.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.ImageNotSupported
-import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -28,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
@@ -42,13 +39,13 @@ fun ProductCard(
     onFavoriteToggle: (Int) -> Unit = {}
 ) {
     Card(
+        onClick = { onViewDetail(product) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .clip(RoundedCornerShape(8))
     ) {
         Column {
-            // Imagen del producto con estados de carga
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -69,7 +66,7 @@ fun ProductCard(
                     error = {
                         Icon(
                             imageVector = Icons.Default.ImageNotSupported,
-                            contentDescription = "Error al cargar imagen",
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
@@ -91,39 +88,24 @@ fun ProductCard(
                     )
                 }
             }
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Column {
-                    Text(
-                        text = product.name,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(product.description)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "$${product.price}",
-                        style = MaterialTheme.typography.headlineLarge,
-                        textAlign = TextAlign.Right
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                IconButton(
-                    onClick = { onViewDetail(product) },
-                    colors = IconButtonDefaults.iconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Visibility,
-                        contentDescription = "Ver Detalle",
-                        tint = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
+                Text(
+                    text = product.name,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(product.description)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "$${product.price}",
+                    style = MaterialTheme.typography.headlineLarge,
+                    textAlign = TextAlign.Right
+                )
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }
